@@ -19,15 +19,10 @@ angular.module('Connect4App')
 	.controller('HomePageController', ['$scope', '$http','$routeParams', '$location', '$rootScope', function($scope, $http, $routeParams, $location, $rootScope){
 	var socket = io()
 
-	
-
 	$scope.submitForm = function() {
-	
 		socket.emit('gameInit', $scope.form)
-		$location.url('/' + $scope.form.room)	
-			
+		$location.url('/' + $scope.form.room)			
 	}
-
 	
 }])
 
@@ -38,7 +33,7 @@ angular.module('Connect4App')
 	$scope.room = $routeParams.roomNumber
 	$scope.gameBoard = []
 	$scope.currentPlayers = []
-
+	
 
 	var populateGameBoard = function(){
 		for(var i =0;i<42;i++){
@@ -47,10 +42,11 @@ angular.module('Connect4App')
 	}
 	populateGameBoard()
  
-
 	socket.on('gameInfo', function(data){
-		$scope.currentPlayers.push(data.players)
 
+		console.log(data)
+		$scope.currentPlayers.push(data.player)
+		$scope.$apply($scope.currentPlayers)
 	})
 
 }])

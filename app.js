@@ -16,29 +16,26 @@ app.get('/', function(req, res){
 });
 
 // Creating Server and Listening for Connections \\
-app.server = app.listen(8080)
+app.server = app.listen(3000)
 
 var io = require("socket.io")
 var socketServer = io(app.server)
 
 
-var playersInGame = []
+// var playersInGame = []
 
 socketServer.on('connection', function(socket) {
 	console.log('a user has connected!')
 
 	socket.on('gameInit', function(data){
-		
+		console.log(data)
 		var gameRoom = data.room
-
-
-
-		playersInGame.push(data.nickname)
-		console.log(playersInGame)
-
+		var player = data.nickname
+		// playersInGame.push(data.nickname)
+		// console.log(playersInGame)
 		socket.join(gameRoom)
-		socketServer.to(gameRoom).emit('gameInfo', {gameinfo: data,
-													players: playersInGame
+		socketServer.to(gameRoom).emit('gameInfo', {room: gameRoom,
+													player: player
 									  })
 	})
 
