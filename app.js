@@ -20,3 +20,27 @@ app.server = app.listen(8080)
 
 var io = require("socket.io")
 var socketServer = io(app.server)
+
+
+var playersInGame = []
+
+socketServer.on('connection', function(socket) {
+	console.log('a user has connected!')
+
+	socket.on('gameInit', function(data){
+		
+		var gameRoom = data.room
+
+
+
+		playersInGame.push(data.nickname)
+		console.log(playersInGame)
+
+		socket.join(gameRoom)
+		socketServer.to(gameRoom).emit('gameInfo', {gameinfo: data,
+													players: playersInGame
+									  })
+	})
+
+
+})
