@@ -1,38 +1,58 @@
-<div class="row">
-	
-	<div class = "col-sm-12 text-center">
-		<h2>You are in game room #{{room}}!!</h2>
-	</div>
-</div>
-
-<div class="row">
-	<div class = "col-sm-12 text-center">
-		<div class= "gameBoard">
-			<div class="hole text-center" ng-repeat="hole in gameBoard">
-				{{hole.holeNumber}}
-			</div>
+<!-- <div ng-show="showButton">
+	<div class="row">
+		<div class ="col-sm-12 text-center" ng-click="startGame()">
+			<button type="button" class= "btn btn-success startGame"> 
+				click to play!
+			</button>
 		</div>
 	</div>
 </div>
 
-<!-- <div class="row">
-	<div class = "col-sm-12 text-center">
-		player 1: {{}}
+<div ng-show="revealPlayers">
+	<div class="row">
+		<div class ="col-sm-12 text-center">
+			<div ng-repeat="player in players">
+				{{player}}
+			</div>
+		</div>
 	</div>
-</div>
+</div> -->
 
-<div class="row">
-	<div class = "col-sm-12 text-center">
-		player 2: {{}}
+	<div class="row">
+		<div class = "col-sm-12 text-center" ng-click="log()">
+			<h2>You are in game room #{{room}}!!</h2>
+		</div>
 	</div>
-</div>
- -->
 
-<div class="row">
-	<div class = "col-sm-12 text-center">
-		<div ng-repeat="player in currentPlayers">
-			{{player}}
+	<div class="row">
+		<div class = "col-sm-12 text-center">
+			<div class= "gameBoard">
+				<div class="hole text-center" ng-repeat="hole in gameBoard track by $index" ng-click="playerMove($index)">
+					{{hole.holeNumber}}
+				</div>
+			</div>
+		</div>
+	</div>
 
+	<!-- <div class="row">
+		<div class = "col-sm-12 text-center">
+			player 1: {{}}
+		</div>
+	</div>
+
+	<div class="row">
+		<div class = "col-sm-12 text-center">
+			player 2: {{}}
+		</div>
+	</div>
+	 -->
+
+	<div class="row">
+		<div class = "col-sm-12 text-center">
+			<div ng-repeat="player in players">
+				{{player}}
+
+			</div>
 		</div>
 	</div>
 </div>

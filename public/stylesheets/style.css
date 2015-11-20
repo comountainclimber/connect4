@@ -27,3 +27,11 @@
 .player2{
 	background-color: black;
 }
+
+.startGame{
+	text-align: center;
+}
+
+.information h3{
+	margin-top:0px;
+}

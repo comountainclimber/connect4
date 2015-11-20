@@ -21,23 +21,40 @@ app.server = app.listen(3000)
 var io = require("socket.io")
 var socketServer = io(app.server)
 
-
-// var playersInGame = []
-
 socketServer.on('connection', function(socket) {
-	console.log('a user has connected!')
+
+	var usersArray = []
+	var users = {}
+	var numUsers = 0
 
 	socket.on('gameInit', function(data){
-		console.log(data)
-		var gameRoom = data.room
-		var player = data.nickname
-		// playersInGame.push(data.nickname)
-		// console.log(playersInGame)
-		socket.join(gameRoom)
-		socketServer.to(gameRoom).emit('gameInfo', {room: gameRoom,
-													player: player
-									  })
+		
+		socket.join(data.room)
+		usersArray.push(data.nickname)
+		// console.log("allUsers: ", usersArray)
+		users[data.nickname] = data.nickname;
+		
+		
+		socketServer.to(data.room).emit('gameInfo', usersArray)
+
 	})
+
+	// var connectedUsers = []
+
+	// console.log('a user has connected!')
+
+	// socket.on('gameInit', function(data){
+	// 	connectedUsers.push(data)
+	// 	var gameRoom = data.room
+	// 	var player = data.nickname
+	// 	socket.join(gameRoom)
+
+	// 	console.log(player + " has joined game # " + gameRoom)
+	// 	socketServer.to(gameRoom).emit('gameInfo', {room: gameRoom,
+	// 												player: player,
+	// 												allOnlineUsers: connectedUsers
+	// 								  })
+	// })
 
 
 })
