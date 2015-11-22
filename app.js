@@ -21,22 +21,32 @@ app.server = app.listen(3000)
 var io = require("socket.io")
 var socketServer = io(app.server)
 
+// var gamesInSession=[
+// {gameroom: 1,
+// currentplayers: [],
+// },
+// {gameroom: 2,
+// currentplayers: [],
+// },
+// {gameroom: 3,
+// currentplayers: [],
+// },
+// {gameroom: 4,
+// currentplayers: [],
+// },]
+
 socketServer.on('connection', function(socket) {
 
-	var usersArray = []
-	var users = {}
-	var numUsers = 0
-
 	socket.on('gameInit', function(data){
-		
-		socket.join(data.room)
-		usersArray.push(data.nickname)
-		// console.log("allUsers: ", usersArray)
-		users[data.nickname] = data.nickname;
-		
-		
-		socketServer.to(data.room).emit('gameInfo', usersArray)
+		var gameSession = data.room
+		console.log(data)
+		socket.join(gameSession)
+		// gamesInSession[data.room].gameroom.push(data.room)
+		// gamesInSession[data.room - 1].currentplayers.push(data.nickname)
+		console.log(gamesInSession[data.room -1 ])
 
+		socketServer.to(gameSession).emit('gameStatus', gamesInSession[data.room -1 ].currentplayers)
+		
 	})
 
 	// var connectedUsers = []

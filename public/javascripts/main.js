@@ -51,12 +51,9 @@ angular.module('Connect4App')
 	// 	$scope.$apply((function(){$scope.players}))
 	// })
 
-
-	socket.on('gameInfo', function(data){
+	socket.on('gameStatus', function(data){
 		console.log(data)
 	})
-
-
 
 	$scope.log = function(){
 		console.log($scope.players)
