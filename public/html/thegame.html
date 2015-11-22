@@ -25,10 +25,20 @@
 	</div>
 
 	<div class="row">
+		<div class = "col-sm-12 text-center" ng-click="log()">
+			<h4>{{messageForPlayer1}}</h4>
+			<h4>{{messageForPlayer2}}</h4>
+		</div>
+	</div>
+
+
+	<div class="row">
 		<div class = "col-sm-12 text-center">
 			<div class= "gameBoard">
-				<div class="hole text-center" ng-repeat="hole in gameBoard track by $index" ng-click="playerMove($index)">
-					{{hole.holeNumber}}
+				<div ng-repeat="array in gameBoard track by $index">
+					<div class = "hole text-center" ng-repeat="object in array track by $index" ng-click = "playerMove($index)">
+					  {{object}}
+					</div>
 				</div>
 			</div>
 		</div>

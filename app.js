@@ -1,6 +1,9 @@
+'use strict';
+
 // Requires \\
 var express = require('express');
 var bodyParser = require('body-parser');
+var io = require('socket.io')
 
 // Create Express App Object \\
 var app = express();
@@ -12,59 +15,62 @@ app.use(express.static(__dirname + '/public'));
 
 // Routes \\
 app.get('/', function(req, res){
-  res.sendFile('/index.html', { root: './public/html' })
+    res.sendFile('/index.html', { root: './public/html' });
 });
 
 // Creating Server and Listening for Connections \\
 app.server = app.listen(3000)
 
-var io = require("socket.io")
-var socketServer = io(app.server)
-
-// var gamesInSession=[
-// {gameroom: 1,
-// currentplayers: [],
-// },
-// {gameroom: 2,
-// currentplayers: [],
-// },
-// {gameroom: 3,
-// currentplayers: [],
-// },
-// {gameroom: 4,
-// currentplayers: [],
-// },]
+var socketServer = io(app.server);
+var roomData = {};
 
 socketServer.on('connection', function(socket) {
 
-	socket.on('gameInit', function(data){
-		var gameSession = data.room
-		console.log(data)
-		socket.join(gameSession)
-		// gamesInSession[data.room].gameroom.push(data.room)
-		// gamesInSession[data.room - 1].currentplayers.push(data.nickname)
-		console.log(gamesInSession[data.room -1 ])
-
-		socketServer.to(gameSession).emit('gameStatus', gamesInSession[data.room -1 ].currentplayers)
-		
-	})
-
-	// var connectedUsers = []
-
-	// console.log('a user has connected!')
-
-	// socket.on('gameInit', function(data){
-	// 	connectedUsers.push(data)
-	// 	var gameRoom = data.room
-	// 	var player = data.nickname
-	// 	socket.join(gameRoom)
-
-	// 	console.log(player + " has joined game # " + gameRoom)
-	// 	socketServer.to(gameRoom).emit('gameInfo', {room: gameRoom,
-	// 												player: player,
-	// 												allOnlineUsers: connectedUsers
-	// 								  })
-	// })
-
+    socket.on('gameInit', function(data){
+        var roomName = data.room;
+        console.log(data);
+        socket.join(roomName);
+        var room = roomData[roomName];
+        if (!room) {
+            room = {
+                name: roomName,
+                players: []
+            }
+        }
+        findRole(room, data.nickName, socket);
+    });
 
 })
+
+var player1Message = 'You are player one... waiting for another player to join.'
+function craftPlayer2Message(name) {
+    return 'You have joined a game with ' + name + '. BUCKLE UP MOFO!';
+}
+
+function findRole(room, name, socket) {
+    var numberOfPlayers = room.length;
+    switch (numberOfPlayers) {
+        case 0:
+            room.players.push({
+                name: name
+            });
+
+            socket.emit('player1Message', {
+                message: player1Message,
+                role: 1
+            });
+        case 1:
+            room.players.push({
+                name: name
+            });
+
+            socket.emit('player2Message', {
+                message: craftPlayer2Message(name),
+                player1: room.players[0].name,
+                role: 2
+            });
+
+            socketServer.to(room.name).emit('startGame');
+        default:
+    }
+}
