@@ -1,4 +1,4 @@
-// GameBoard constructor this populates the game board with spaces to play. It creates 7 columns with 6 spaces in each column
+// GameBoard constructor
 function GameBoard() {
     this.playField = [];
 
@@ -58,6 +58,8 @@ GameBoard.prototype.placeChip = function(xCoord, playerRole) {
 
 // Check for all possible win vectors for a new move
 GameBoard.prototype.detectWin = function(latestMove) {
+    var self = this;
+
     var positionFunctions = [
         'findleftCell',
         'findBottomCell',
@@ -77,7 +79,7 @@ GameBoard.prototype.detectWin = function(latestMove) {
             currentCell: latestMove
         }
 
-        var moveResults = this.checkWin(opts);
+        var moveResults = self.checkWin(opts);
 
         if (moveResults.winState === true) {
             winObj = moveResults;
@@ -93,7 +95,7 @@ GameBoard.prototype.detectWin = function(latestMove) {
 };
 
 // Recursive check for win
-GameBoard.prototype.checkWin(options) {
+GameBoard.prototype.checkWin = function(options){
     var streak = options.streak = options.streak || [];
     var currentCell = options.currentCell;
     if (streak.length === 4) {

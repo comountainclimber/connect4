@@ -31,58 +31,70 @@ angular.module('Connect4App')
     var socket = io()
 
     $scope.room = $routeParams.roomNumber
-    $scope.gameBoard = [];
-    populateGameBoard();
-    $scope.isDisabled = true;
-    var role;
+    // $scope.playField = [];
+   
+
 
 //-----------creating the circle divs to populate game-----------//
-    function populateGameBoard() {
-        for (var i = 0; i<7; i++){
+
+
+
+  $scope.GameBoard = function(){
+       this.playField = []
+        for (var x = 0; x < 7; x++){
             var column = [];
-            for (var k = 0; k < 6; k++){
-                column.push({});
+            for (var y = 0; y < 6; y++){
+                column.push(new BoardCell(x, y, this.playField));
             }
-            $scope.gameBoard.push(column);
+            this.playField.push(column);
         }
     }
 
-    function unlockBoard() {
-        $scope.isDisabled = false;
-    }
+    function BoardCell(xCoord, yCoord, playField) {
+        this.playField = playField;
+        this.xCoord = xCoord;
+        this.yCoord = yCoord;
+        this.owner = 0;
+    };
 
-    $scope.playerMove = function(index){
-        console.log(index)
-        $scope.isDisabled = true;
-    }
+     $scope.GameBoard();
+
+    // function unlockBoard() {
+    //     $scope.isDisabled = false;
+    // }
+
+    // $scope.playerMove = function(index){
+    //     console.log(index)
+    //     $scope.isDisabled = true;
+    // }
 
 //--------------------------------------------------------------//
-    socket.on('gameStatus', function(data){
-        console.log(data)
-    })
+    // socket.on('gameStatus', function(data){
+    //     console.log(data)
+    // })
 
-    socket.on('player1Message', function(data){
-        console.log(data.message)
-        $scope.messageForPlayer1 = data.message
-        $scope.$apply(function(){$scope.messageForPlayer1})
-        role = data.role;
-    })
+    // socket.on('player1Message', function(data){
+    //     console.log(data.message)
+    //     $scope.messageForPlayer1 = data.message
+    //     $scope.$apply(function(){$scope.messageForPlayer1})
+    //     role = data.role;
+    // })
 
-    socket.on('player2Message', function(data){
-        console.log(data.message)
-        $scope.messageForPlayer2 = data.message
-        $scope.$apply(function(){$scope.messageForPlayer2})
-        role = data.role;
-    })
+    // socket.on('player2Message', function(data){
+    //     console.log(data.message)
+    //     $scope.messageForPlayer2 = data.message
+    //     $scope.$apply(function(){$scope.messageForPlayer2})
+    //     role = data.role;
+    // })
 
-    socket.on('startGame', function(data){
-        console.log(data.message)
-        if (role === 1) {
-            unlockBoard();
-        }
-    })
+    // socket.on('startGame', function(data){
+    //     console.log(data.message)
+    //     if (role === 1) {
+    //         unlockBoard();
+    //     }
+    // })
 
-    $scope.log = function(){
-        console.log($scope.players)
-    }
+    // $scope.log = function(){
+    //     console.log($scope.players)
+    // }
 }])
