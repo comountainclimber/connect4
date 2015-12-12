@@ -7,7 +7,7 @@ angular.module('Connect4App')
                 templateUrl : '/html/home.html',
                 controller : 'HomePageController'
             })
-            .when('/:roomNumber', {
+            .when('/game', {
                 templateUrl : '/html/thegame.html',
                 controller : 'GameController'
             })
@@ -17,56 +17,60 @@ angular.module('Connect4App')
     .controller('HomePageController', ['$scope', '$http','$routeParams', '$location', '$rootScope', function($scope, $http, $routeParams, $location, $rootScope){
     var socket = io()
 
+    $scope.players = []
     $scope.submitForm = function() {
-        console.log($scope.form)
-        socket.emit('gameInit', $scope.form)
-        $rootScope.nickname = $scope.form.nickname
-        $location.url('/' + $scope.form.room)
+        $rootScope.playerInfo = $scope.players
+        $location.url('/game')
+        // socket.emit('gameInit', $scope.form)
+        // $rootScope.nickname = $scope.form.nickname
+        // $location.url('/' + $scope.form.room)
     }
 }]);
 
 
 angular.module('Connect4App')
     .controller('GameController', ['$scope', '$http','$routeParams', '$location', '$rootScope', function($scope, $http, $routeParams, $location, $rootScope){
-    var socket = io()
+    // var socket = io()
+    console.log($rootScope.playerInfo)
+    $scope.player1 = $rootScope.playerInfo[0]
+    $scope.player2 = $rootScope.playerInfo[1]
 
-    $scope.room = $routeParams.roomNumber
+
+    // $scope.room = $routeParams.roomNumber
     // $scope.playField = [];
    
-
-
 //-----------creating the circle divs to populate game-----------//
 
+$scope.GameBoard = function() {
+    this.playField = [];
 
-
-  $scope.GameBoard = function(){
-       this.playField = []
-        for (var x = 0; x < 7; x++){
-            var column = [];
-            for (var y = 0; y < 6; y++){
-                column.push(new BoardCell(x, y, this.playField));
-            }
-            this.playField.push(column);
+    for (var x = 0; x < 8; x++){
+        var column = [];
+        for (var y = 0; y < 6; y++){
+            column.push(new $scope.BoardCell(x, y, this.playField));
         }
+        this.playField.push(column);
     }
+}
+$scope.BoardCell = function(xCoord, yCoord, playField) {
+    this.playField = playField;
+    this.xCoord = xCoord;
+    this.yCoord = yCoord;
+    this.owner = 0;
+};
+    $scope.GameBoard()
 
-    function BoardCell(xCoord, yCoord, playField) {
-        this.playField = playField;
-        this.xCoord = xCoord;
-        this.yCoord = yCoord;
-        this.owner = 0;
-    };
 
-     $scope.GameBoard();
+
+
 
     // function unlockBoard() {
     //     $scope.isDisabled = false;
     // }
 
-    // $scope.playerMove = function(index){
-    //     console.log(index)
-    //     $scope.isDisabled = true;
-    // }
+    $scope.playerMove = function(index){
+        console.log(index)
+    }
 
 //--------------------------------------------------------------//
     // socket.on('gameStatus', function(data){
