@@ -20,13 +20,25 @@
     
 }
 
-.player1 {
+.player1{
 	background-color: red;
+	margin:auto;
+
+}
+
+.red {
+	background-color:red;
+}
+
+.black{
+	background-color: black;
 }
 
 .player2{
 	background-color: black;
 	color:white;
+	margin:auto;
+
 }
 
 .startGame{

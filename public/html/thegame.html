@@ -1,87 +1,44 @@
-<!-- <div ng-show="showButton">
-	<div class="row">
-		<div class ="col-sm-12 text-center" ng-click="startGame()">
-			<button type="button" class= "btn btn-success startGame"> 
-				click to play!
-			</button>
-		</div>
-	</div>
-</div>
-
-<div ng-show="revealPlayers">
-	<div class="row">
-		<div class ="col-sm-12 text-center">
-			<div ng-repeat="player in players">
-				{{player}}
-			</div>
-		</div>
-	</div>
-</div> -->
-
+<div class="container">
 	<div class="row">
 		<div class = "col-sm-12 text-center" ng-click="log()">
 			<h2>Connect4</h2>
+			The <-- indicates which player's turn it is!
 		</div>
 	</div>
 
 	<div class="row">
-		<div class = "col-sm-4">
+		<div class = "col-xs-4">
 		</div>
-		<div class = "col-sm-4 text-center">
-			<h4 class='player1'>Player 1: {{player1}}</h4>
+		<div class = "col-xs-4 text-center">
+			<h4 class='player1'>Player 1: {{player1.username}}</h4> 	
 		</div>
-		<div class = "col-sm-4">
+		<div class = "col-xs-4">
+			<div ng-class='{"glyphicon glyphicon-arrow-left" : player1.playerOnesTurn}'> 
+			</div>
 		</div>
 	</div>
 
 	<div class="row">
-		<div class = "col-sm-4">
+		<div class = "col-xs-4">
 		</div>
-		<div class = "col-sm-4 text-center">
-			<h4 class='player2'>Player 2: {{player2}}</h4>
+		<div class = "col-xs-4 text-center">
+			<h4 class='player2'>Player 2: {{player2.username}}</h4>
 		</div>
-		<div class = "col-sm-4">
+		<div class = "col-xs-4">
+			<div ng-class='{"glyphicon glyphicon-arrow-left" : player2.playerTwosTurn}'> 
+			</div>
 		</div>
 	</div>
-
-	<!-- <div class="row">
-		<div class = "col-sm-12 text-center" ng-click="log()">
-			<h4>{{messageForPlayer1}}</h4>
-			<h4>{{messageForPlayer2}}</h4>
-		</div>
-	</div> -->
-
 
 	<div class="row">
 		<div class = "col-sm-12 text-center">
 			<div class= "gameBoard">
 				<div ng-repeat="array in playField">
-					<div class = "hole text-center" ng-repeat="object in array" ng-click = "playerMove($index)">
+					<div class = "hole text-center" ng-class='{"red" : redMove, "black" : blackMove  }'ng-repeat="object in array track by $index" ng-click = "GameBoard.prototype.playerMove($index)">
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+</div>
 
-	<!-- <div class="row">
-		<div class = "col-sm-12 text-center">
-			player 1: {{}}
-		</div>
-	</div>
-
-	<div class="row">
-		<div class = "col-sm-12 text-center">
-			player 2: {{}}
-		</div>
-	</div>
-	 -->
-
-	<!-- <div class="row">
-		<div class = "col-sm-12 text-center">
-			<div ng-repeat="player in players">
-				{{player}}
-
-			</div>
-		</div>
-	</div>
-</div> -->
