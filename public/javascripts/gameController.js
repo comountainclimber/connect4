@@ -44,48 +44,22 @@ $scope.GameBoard.prototype.playerMove = function(index) {
     $scope.player2.playerTwosTurn = !$scope.player2.playerTwosTurn
     $scope.player1.playerOnesTurn = !$scope.player1.playerOnesTurn
 
-    // var playerRole
-
+//assigning player roles based on who is making the move
     if (!$scope.player1.playerOnesTurn) {
         var playerRole = 1
     }
-
     else {
         var playerRole = 2
     }
 
-   
-    // console.log(playerRole)
-    var columnPlayed = $scope.playField[index]
-    var xCoord = index
+//the column played and x coordinate are the same
+    var columnPlayed = index + 1
+    console.log("Player "+ playerRole + " has selected column #"+ columnPlayed)
 
-    var playedCell = this.placeChip(xCoord, playerRole, columnPlayed);
-
-    // console.log("X axis: " + index)
-    
+    //call the detectWin function
     // this.detectWin(playedCell);
 }
 
-$scope.GameBoard.prototype.placeChip = function(xCoord, playerRole, columnPlayed) {
-
-    // var columnPlayed = $scope.GameBoard.playField[xCoord];
-    $scope.playedCell = {};
-
-    // Loop to determine gravity
-    for (var i = 0; i < 6; i++) {
-        var currentCell = columnPlayed[i];
-
-    // Column selected is empty, place at the bottom of column
-        if (i === 6) {
-            playedCell = columnPlayed[5];
-        }
-    }
-
-    $scope.playedCell.owner = playerRole;
-
-    // $scope.redMove = !$scope.blackMove
-
-}
 
 
 
