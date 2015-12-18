@@ -35,8 +35,6 @@
 			<div class= "gameBoard">
 				<div ng-repeat="array in playField" >
 					<div class = "hole text-center" ng-repeat="object in array track by $index"  ng-class='{"red" : object.ownedByPlayerOne, "black" : object.ownedByPlayerTwo}' ng-click = "GameBoard.prototype.playerMove($index)">
-					<!-- 	<div ng-class='{"red" : playField.BoardCell.ownedByPlayerOne, "black" : playField.BoardCell.ownedByPlayerTwo}'>
-						</div> -->
 					</div>
 				</div>
 			</div>

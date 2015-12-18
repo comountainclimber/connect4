@@ -25,11 +25,11 @@ $scope.player1.playerTwosTurn = false
 $scope.GameBoard = function() {
     this.playField = [];
     for (var x = 0; x < 6 ; x++){
-        var column = [];
+        var row = [];
         for (var y = 0; y < 7; y++){
-            column.push(new $scope.BoardCell(x, y, this.playField));
+            row.push(new $scope.BoardCell(x, y, this.playField));
         }
-        this.playField.push(column);
+        this.playField.push(row);
     }
 }
 $scope.BoardCell = function(xCoord, yCoord, playField, owner) {
@@ -55,44 +55,33 @@ $scope.GameBoard.prototype.playerMove = function(index) {
     else {
         var playerRole = {number: 2, name:'ownedByPlayerTwo'}
     }
-      console.log(index)
       var xCoord = index
 
     var playedCell = this.placeChip(xCoord, playerRole)
     console.log(playedCell)
-
-
-    // for (var i = 0; i < 6; i++) {
-    //     console.log($scope.playField[xCoord][i])
-    //     if ($scope.playField[xCoord][i].occupied = false) {
-    //         $scope.playerField[xCoord][i].playerRole.name = true
-    //     }
-
 }
 
 $scope.GameBoard.prototype.placeChip = function (xCoord, playerRole){
     var playedCell;
 
     console.log(playerRole)
-    for (var i = 0; i < 6; i++) {
+    for (var i = 0; i < 7; i++) {
         
-        if ($scope.playField[xCoord][i].occupied === false) {
-            $scope.playField[xCoord][i].occupied = true
-            $scope.playField[xCoord][i].owner = playerRole.number
+        if ($scope.playField[i][xCoord].occupied === false) {
+            $scope.playField[i][xCoord].occupied = true
+            $scope.playField[i][xCoord].owner = playerRole.number
 
-                if($scope.playField[xCoord][i].owner === 1) {
-                    $scope.playField[xCoord][i].ownedByPlayerOne = true
+                if($scope.playField[i][xCoord].owner === 1) {
+                    $scope.playField[i][xCoord].ownedByPlayerOne = true
                 }
 
-                else if ($scope.playField[xCoord][i].owner === 2) {
-                    $scope.playField[xCoord][i].ownedByPlayerTwo = true
+                else if ($scope.playField[i][xCoord].owner === 2) {
+                    $scope.playField[i][xCoord].ownedByPlayerTwo = true
                 }
 
-            console.log($scope.playField[xCoord][i])
+            console.log($scope.playField[i][xCoord])
             break
         }
-    // break
-    // }
     }
 }
 
