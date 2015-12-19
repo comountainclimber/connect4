@@ -65,7 +65,7 @@ $scope.GameBoard.prototype.placeChip = function (xCoord, playerRole){
     var playedCell;
 
     console.log(playerRole)
-    for (var i = 0; i < 7; i++) {
+    for (var i = 0; i < 6; i++) {
         
         if ($scope.playField[i][xCoord].occupied === false) {
             $scope.playField[i][xCoord].occupied = true

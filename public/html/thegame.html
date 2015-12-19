@@ -33,8 +33,8 @@
 	<div class="row">
 		<div class = "col-sm-12 text-center">
 			<div class= "gameBoard">
-				<div ng-repeat="array in playField" >
-					<div class = "hole text-center" ng-repeat="object in array track by $index"  ng-class='{"red" : object.ownedByPlayerOne, "black" : object.ownedByPlayerTwo}' ng-click = "GameBoard.prototype.playerMove($index)">
+				<div ng-repeat="array in playField | reverse" >
+					<div class = "hole text-center" ng-repeat="object in array track by $index "  ng-class='{"red" : object.ownedByPlayerOne, "black" : object.ownedByPlayerTwo}' ng-click = "GameBoard.prototype.playerMove($index)">
 					</div>
 				</div>
 			</div>
