@@ -2,9 +2,9 @@
 function GameBoard() {
     this.playField = [];
 
-    for (var x = 0; x < 7; x++){
-        var column = [];
-        for (var y = 0; y < 6; y++){
+    for (var x = 0; x < 6; x++){
+        var column= [];
+        for (var y = 0; y < 7; y++){
             column.push(new BoardCell(x, y, this.playField));
         }
         this.playField.push(column);
@@ -72,7 +72,7 @@ GameBoard.prototype.detectWin = function(latestMove) {
     ]
 
     var winObj;
-    var winFound = positionFunctions.some(function (currFunc){
+    var winFound = positionFunctions.some(function check(currFunc){
         var opts = {
             owner: latestMove.owner,
             positionFunction: currFunc,
